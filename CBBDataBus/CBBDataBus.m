@@ -30,7 +30,8 @@
         return;
     }
     @synchronized (self) {
-        for (CBBDataBusHandler handler in _handlers) {
+        NSArray* handlers = [_handlers copy];
+        for (CBBDataBusHandler handler in handlers) {
             handler(data);
         }
     }
