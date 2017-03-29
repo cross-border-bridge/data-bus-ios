@@ -102,7 +102,7 @@
                 _counter++;
                 // send B -> A
                 [_dataBusB sendData:@[ @"HELLO", @"THIS", @"IS", @"B", @(2222) ]];
-                // [_dataBusB removeHandler:handler];
+                [_dataBusB removeHandler:handler];
             };
             [_dataBusB addHandler:handler];
         }];
