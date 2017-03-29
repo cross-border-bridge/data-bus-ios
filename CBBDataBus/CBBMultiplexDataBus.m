@@ -16,10 +16,9 @@
     if (self = [super init]) {
         _dataBus = dataBus;
         _dataId = dataId;
-        __weak NSArray<CBBDataBusHandler>* __handlers = self.handlers;
         __weak id __self = self;
         _handler = ^(NSArray* packet) {
-            if ([__self destroyed] || __handlers.count < 1) {
+            if ([__self destroyed] || [__self getHandlerCount] < 1) {
                 return;
             }
             if (packet.count < 1 || ![_dataId isEqualToString:packet[0]]) {
@@ -29,9 +28,7 @@
             for (int i = 1; i < packet.count; i++) {
                 [data addObject:packet[i]];
             }
-            for (CBBDataBusHandler handler in __handlers) {
-                handler(data);
-            }
+            [__self onReceiveData:data];
         };
         [_dataBus addHandler:_handler];
     }

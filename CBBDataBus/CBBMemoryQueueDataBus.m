@@ -16,9 +16,7 @@
     if ([super init]) {
         self.sender = sender;
         receiver.handler = ^(NSArray* data) {
-            for (CBBDataBusHandler handler in super.handlers) {
-                handler(data);
-            }
+            [super onReceiveData:data];
         };
     }
     return self;
