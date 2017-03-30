@@ -27,11 +27,12 @@
     if (_destroyed) {
         return;
     }
+    NSArray* handlers;
     @synchronized (self) {
-        NSArray* handlers = [_handlers copy];
-        for (CBBDataBusHandler handler in handlers) {
-            handler(data);
-        }
+        handlers = [_handlers copy];
+    }
+    for (CBBDataBusHandler handler in handlers) {
+        handler(data);
     }
 }
 
