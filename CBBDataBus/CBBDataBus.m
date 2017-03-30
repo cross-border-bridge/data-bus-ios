@@ -71,7 +71,7 @@
     }
 }
 
-- (NSInteger)getHandlerCount
+- (NSInteger)handlerCount
 {
     NSInteger result;
     @synchronized (self) {

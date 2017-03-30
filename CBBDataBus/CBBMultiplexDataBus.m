@@ -18,7 +18,7 @@
         _dataId = dataId;
         __weak typeof(self) weakSelf = self;
         _handler = ^(NSArray* packet) {
-            if ([weakSelf destroyed] || [weakSelf getHandlerCount] < 1) {
+            if ([weakSelf destroyed] || weakSelf.handlerCount < 1) {
                 return;
             }
             if (packet.count < 1 || ![_dataId isEqualToString:packet[0]]) {
