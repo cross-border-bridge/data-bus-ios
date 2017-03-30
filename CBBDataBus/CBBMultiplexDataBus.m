@@ -16,9 +16,9 @@
     if (self = [super init]) {
         _dataBus = dataBus;
         _dataId = dataId;
-        __weak id __self = self;
+        __weak typeof(self) weakSelf = self;
         _handler = ^(NSArray* packet) {
-            if ([__self destroyed] || [__self getHandlerCount] < 1) {
+            if ([weakSelf destroyed] || [weakSelf getHandlerCount] < 1) {
                 return;
             }
             if (packet.count < 1 || ![_dataId isEqualToString:packet[0]]) {
@@ -28,7 +28,7 @@
             for (int i = 1; i < packet.count; i++) {
                 [data addObject:packet[i]];
             }
-            [__self onReceiveData:data];
+            [weakSelf onReceiveData:data];
         };
         [_dataBus addHandler:_handler];
     }
