@@ -14,11 +14,12 @@
 - (instancetype)initWithSender:(CBBMemoryQueue*)sender
                       receiver:(CBBMemoryQueue*)receiver
 {
+    __weak typeof(self) weakSelf = self;
     if ([super init]) {
         _sender = sender;
         _receiver = receiver;
         _receiver.handler = ^(NSArray* data) {
-            [super onReceiveData:data];
+            [weakSelf onReceiveData:data];
         };
     }
     return self;
