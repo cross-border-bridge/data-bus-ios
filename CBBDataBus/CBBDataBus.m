@@ -4,7 +4,7 @@
 
 @interface CBBDataBus ()
 @property (readwrite, nonatomic) BOOL destroyed;
-@property (readwrite, atomic) NSMutableArray<CBBDataBusHandler>* handlers;
+@property (readwrite, nonatomic) NSMutableArray<CBBDataBusHandler>* handlers;
 @end
 
 @implementation CBBDataBus
@@ -82,7 +82,9 @@
 
 - (void)destroy
 {
-    _handlers = nil;
+    @synchronized (self) {
+        _handlers = nil;
+    }
     _destroyed = YES;
 }
 
