@@ -5,7 +5,6 @@
 @interface CBBDataBus ()
 @property (readwrite, nonatomic) BOOL destroyed;
 @property (readwrite, atomic) NSMutableArray<CBBDataBusHandler>* handlers;
-@property (atomic) CBBDataBusHandlerId nextHandlerId;
 @end
 
 @implementation CBBDataBus
@@ -13,7 +12,6 @@
 - (instancetype)init
 {
     if (self = [super init]) {
-        _nextHandlerId = 1;
         _handlers = [NSMutableArray array];
     }
     return self;

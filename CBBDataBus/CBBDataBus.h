@@ -4,7 +4,6 @@
 
 NS_ASSUME_NONNULL_BEGIN
 
-typedef NSInteger CBBDataBusHandlerId;
 typedef void (^CBBDataBusHandler)(NSArray* data);
 
 @interface CBBDataBus : NSObject
