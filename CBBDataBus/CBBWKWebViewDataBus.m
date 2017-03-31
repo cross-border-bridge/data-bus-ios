@@ -162,9 +162,7 @@ static NSString const* CBBLocationHashPrefix = @"cbb-data-bus://";
 
 - (void)_processReceiveArguments:(NSArray*)data
 {
-    for (CBBDataBusHandler handler in super.handlers) {
-        handler(data);
-    }
+    [self onReceiveData:data];
 }
 
 #pragma mark - KVO

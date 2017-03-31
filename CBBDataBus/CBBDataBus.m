@@ -5,7 +5,6 @@
 @interface CBBDataBus ()
 @property (readwrite, nonatomic) BOOL destroyed;
 @property (readwrite, nonatomic) NSMutableArray<CBBDataBusHandler>* handlers;
-@property (nonatomic) CBBDataBusHandlerId nextHandlerId;
 @end
 
 @implementation CBBDataBus
@@ -13,7 +12,6 @@
 - (instancetype)init
 {
     if (self = [super init]) {
-        _nextHandlerId = 1;
         _handlers = [NSMutableArray array];
     }
     return self;
@@ -22,6 +20,20 @@
 - (void)sendData:(NSArray*)data
 {
     NSAssert(NO, @"must be overridden");
+}
+
+- (void)onReceiveData:(NSArray*)data
+{
+    if (_destroyed) {
+        return;
+    }
+    NSArray* handlers;
+    @synchronized (self) {
+        handlers = [_handlers copy];
+    }
+    for (CBBDataBusHandler handler in handlers) {
+        handler(data);
+    }
 }
 
 - (void)addHandler:(CBBDataBusHandler)handler
@@ -60,9 +72,20 @@
     }
 }
 
+- (NSInteger)handlerCount
+{
+    NSInteger result;
+    @synchronized (self) {
+        result = _handlers.count;
+    }
+    return result;
+}
+
 - (void)destroy
 {
-    _handlers = nil;
+    @synchronized (self) {
+        _handlers = nil;
+    }
     _destroyed = YES;
 }
 

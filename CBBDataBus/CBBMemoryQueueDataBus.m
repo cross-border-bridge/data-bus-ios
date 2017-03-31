@@ -5,6 +5,7 @@
 
 @interface CBBMemoryQueueDataBus ()
 @property (readwrite, nonnull) CBBMemoryQueue* sender;
+@property (readwrite, nonnull) CBBMemoryQueue* receiver;
 @property (readwrite, nonnull) CBBMemoryQueueHandler handler;
 @end
 
@@ -13,12 +14,12 @@
 - (instancetype)initWithSender:(CBBMemoryQueue*)sender
                       receiver:(CBBMemoryQueue*)receiver
 {
-    if ([super init]) {
-        self.sender = sender;
-        receiver.handler = ^(NSArray* data) {
-            for (CBBDataBusHandler handler in super.handlers) {
-                handler(data);
-            }
+    if (self = [super init]) {
+        _sender = sender;
+        _receiver = receiver;
+        __weak typeof(self) weakSelf = self;
+        _receiver.handler = ^(NSArray* data) {
+            [weakSelf onReceiveData:data];
         };
     }
     return self;
@@ -27,6 +28,21 @@
 - (void)sendData:(NSArray*)data
 {
     [_sender sendData:data];
+}
+
+- (void)destroy
+{
+    _sender = nil;
+    if (_receiver) {
+        _receiver.handler = nil;
+        _receiver = nil;
+    }
+    [super destroy];
+}
+
+- (void)dealloc
+{
+    [self destroy];
 }
 
 @end
