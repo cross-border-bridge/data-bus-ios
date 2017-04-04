@@ -17,56 +17,56 @@
     [super viewDidLoad];
     CGFloat width = self.view.frame.size.width;
     CGFloat height = self.view.frame.size.height;
-    
+
     UILabel* label = [[UILabel alloc] initWithFrame:CGRectMake(4, 30, width - 8, 30)];
     label.text = @"Native";
     [self.view addSubview:label];
-    
+
     // ボタンを準備
     [self addButton:CGRectMake(4, 70, width - 8, 30) title:@"Start sending 10000 request from Native" action:@selector(onStart:)];
-    
+
     // WKWebViewを準備（※この時点ではまだコンテンツを読み込まない）
     _webView = [[WKWebView alloc]
-                initWithFrame:CGRectMake(4, height / 2 + 4, width - 8, height / 2 - 8)];
+        initWithFrame:CGRectMake(4, height / 2 + 4, width - 8, height / 2 - 8)];
     _webView.layer.borderWidth = 2.0f;
     _webView.layer.borderColor = [[UIColor blueColor] CGColor];
     _webView.layer.cornerRadius = 10.0f;
     _webView.navigationDelegate = self;
     _webView.autoresizingMask =
-    UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
+        UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
     _webView.UIDelegate = self;
     // WKWebView　は App bundle のファイルを読めない為, bundleの内容を tmp
     // へコピーしてそこから読み込む
     [self copyWithTarget:@"index.html"];
     [self copyWithTarget:@"script.js"];
     [self.view addSubview:_webView];
-    
+
     // CBBDataBusを準備
     _dataBus = [[CBBWKWebViewDataBus alloc] initWithWKWebView:_webView];
     _counter = 0;
     __weak typeof(self) weakSelf = self;
-    [_dataBus addHandler:^(NSArray * _Nonnull data) {
+    [_dataBus addHandler:^(NSArray* _Nonnull data) {
         if ([@"Request" isEqualToString:data[0]]) {
-            [weakSelf.dataBus sendData:@[@"Response"]];
+            [weakSelf.dataBus sendData:@[ @"Response" ]];
         } else {
             weakSelf.counter++;
             if (0 == weakSelf.counter % 10000) {
                 UIAlertController* alert = [UIAlertController
-                                            alertControllerWithTitle:@"Alert from Native"
-                                            message:@"Received 10000 response"
-                                            preferredStyle:UIAlertControllerStyleAlert];
+                    alertControllerWithTitle:@"Alert from Native"
+                                     message:@"Received 10000 response"
+                              preferredStyle:UIAlertControllerStyleAlert];
                 UIAlertAction* ok = [UIAlertAction
-                                     actionWithTitle:@"OK"
-                                     style:UIAlertActionStyleDefault
-                                     handler:^(UIAlertAction* action) {
-                                         [alert dismissViewControllerAnimated:YES completion:nil];
-                                     }];
+                    actionWithTitle:@"OK"
+                              style:UIAlertActionStyleDefault
+                            handler:^(UIAlertAction* action) {
+                                [alert dismissViewControllerAnimated:YES completion:nil];
+                            }];
                 [alert addAction:ok];
                 [weakSelf presentViewController:alert animated:YES completion:nil];
             }
         }
     }];
-    
+
     // WKWebView にコンテンツを読み込む（CBBDataBusがインジェクトされる）
     NSURL* url = [NSURL URLWithString:[NSString stringWithFormat:@"file://%@/index.html", [self getTmpDirectory]]];
     [_webView loadFileURL:url allowingReadAccessToURL:url];
@@ -94,13 +94,13 @@
     NSLog(@"send 10000 request");
     const int threadNumber = 10;
     NSOperationQueue* threads[threadNumber];
-    
+
     for (int i = 0; i < threadNumber; i++) {
         threads[i] = [[NSOperationQueue alloc] init];
         __weak typeof(self) weakSelf = self;
         [threads[i] addOperationWithBlock:^{
             for (int i = 0; i < 1000; i++) {
-                [weakSelf.dataBus sendData:@[@"Request"]];
+                [weakSelf.dataBus sendData:@[ @"Request" ]];
             }
         }];
     }
@@ -154,9 +154,9 @@
 - (void)webView:(WKWebView*)webView runJavaScriptAlertPanelWithMessage:(NSString*)message initiatedByFrame:(WKFrameInfo*)frame completionHandler:(void (^)(void))completionHandler
 {
     UIAlertController* alert =
-    [UIAlertController alertControllerWithTitle:@"Alert from JS"
-                                        message:message
-                                 preferredStyle:UIAlertControllerStyleAlert];
+        [UIAlertController alertControllerWithTitle:@"Alert from JS"
+                                            message:message
+                                     preferredStyle:UIAlertControllerStyleAlert];
     UIAlertAction* ok = [UIAlertAction actionWithTitle:@"OK"
                                                  style:UIAlertActionStyleDefault
                                                handler:^(UIAlertAction* action) {
