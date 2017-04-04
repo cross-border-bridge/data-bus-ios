@@ -92,14 +92,14 @@
 - (void)onStart:(id)inSender
 {
     NSLog(@"send 10000 request");
-    const int threadNumber = 10;
+    const int threadNumber = 100;
     NSOperationQueue* threads[threadNumber];
 
     for (int i = 0; i < threadNumber; i++) {
         threads[i] = [[NSOperationQueue alloc] init];
         __weak typeof(self) weakSelf = self;
         [threads[i] addOperationWithBlock:^{
-            for (int i = 0; i < 1000; i++) {
+            for (int i = 0; i < 100; i++) {
                 [weakSelf.dataBus sendData:@[ @"Request" ]];
             }
         }];
