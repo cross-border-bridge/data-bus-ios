@@ -70,7 +70,7 @@
 - (void)testMultiThread
 {
     _counter = 0;
-    
+
     _dataBusA = [[CBBMemoryQueueDataBus alloc] initWithSender:_mqA receiver:_mqB];
     [_dataBusA addHandler:^(NSArray* _Nonnull data) {
         NSLog(@"dataBusA received: %@", data);
@@ -82,7 +82,7 @@
         XCTAssertEqualObjects(data[4], @(2222));
         _counter++;
     }];
-    
+
     _dataBusB = [[CBBMemoryQueueDataBus alloc] initWithSender:_mqB receiver:_mqA];
 
     const int threadNumber = 10;
@@ -116,9 +116,8 @@
     // send A -> B
     [_dataBusA sendData:@[ @"Hello", @"This", @"is", @"A", @(1111) ]];
 
-    
     XCTAssertEqual(_counter, threadNumber * 2);
-    
+
     [_dataBusA destroy];
     [_dataBusB destroy];
 }

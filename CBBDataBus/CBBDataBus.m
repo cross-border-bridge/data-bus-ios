@@ -28,7 +28,8 @@
         return;
     }
     NSArray* handlers;
-    @synchronized (self) {
+    @synchronized(self)
+    {
         handlers = [_handlers copy];
     }
     for (CBBDataBusHandler handler in handlers) {
@@ -75,7 +76,8 @@
 - (NSInteger)handlerCount
 {
     NSInteger result;
-    @synchronized (self) {
+    @synchronized(self)
+    {
         result = _handlers.count;
     }
     return result;
@@ -83,7 +85,8 @@
 
 - (void)destroy
 {
-    @synchronized (self) {
+    @synchronized(self)
+    {
         _handlers = nil;
     }
     _destroyed = YES;
