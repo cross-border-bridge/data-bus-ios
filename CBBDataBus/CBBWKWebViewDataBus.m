@@ -71,7 +71,9 @@ static NSString const* CBBLocationHashPrefix = @"cbb-data-bus://";
     NSError* error = nil;
     NSData* json = [NSJSONSerialization dataWithJSONObject:data options:0 error:&error];
     NSString* jsonString = [[NSString alloc] initWithData:json encoding:NSUTF8StringEncoding];
-    [self.pendingRequests addObject:jsonString];
+    @synchronized (self) {
+        [self.pendingRequests addObject:jsonString];
+    }
     [self consumeRequestsIfNeeded];
 }
 
