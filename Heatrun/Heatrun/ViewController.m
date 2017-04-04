@@ -51,6 +51,7 @@
         } else {
             weakSelf.counter++;
             if (0 == weakSelf.counter % 10000) {
+                NSLog(@"Received 10000 response");
                 UIAlertController* alert = [UIAlertController
                     alertControllerWithTitle:@"Alert from Native"
                                      message:@"Received 10000 response"
@@ -91,7 +92,7 @@
 
 - (void)onStart:(id)inSender
 {
-    NSLog(@"send 10000 request");
+    NSLog(@"sending 10000 request");
     const int threadNumber = 100;
     NSOperationQueue* threads[threadNumber];
 
