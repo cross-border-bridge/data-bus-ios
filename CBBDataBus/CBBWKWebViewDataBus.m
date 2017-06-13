@@ -140,20 +140,19 @@ static NSString const* CBBLocationHashPrefix = @"cbb-data-bus://";
         return;
     }
 
-    __weak id weakSelf = self;
+    __weak __typeof(self) weakSelf = self;
     _evaluateJavaScript = ^(id ret, NSError* error) {
         NSString* data;
         @synchronized(weakSelf)
         {
             data = self.pendingRequests.firstObject;
             if (data) {
-                [((CBBWKWebViewDataBus*)weakSelf).pendingRequests removeObjectAtIndex:0];
+                [weakSelf.pendingRequests removeObjectAtIndex:0];
             }
         }
         if (data) {
             NSString* script = [NSString stringWithFormat:@"CBB.WebViewDataBus.onData(%@);", data];
-            [((CBBWKWebViewDataBus*)weakSelf).webView evaluateJavaScript:script
-                                                       completionHandler:((CBBWKWebViewDataBus*)weakSelf).evaluateJavaScript];
+            [weakSelf.webView evaluateJavaScript:script completionHandler:weakSelf.evaluateJavaScript];
         } else {
             completionHandler();
         }
