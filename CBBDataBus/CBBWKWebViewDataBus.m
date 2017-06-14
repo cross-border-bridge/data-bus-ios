@@ -154,7 +154,8 @@ static NSString const* CBBLocationHashPrefix = @"cbb-data-bus://";
         }
         if (data) {
             NSString* script = [NSString stringWithFormat:@"CBB.WebViewDataBus.onData(%@);", data];
-            [weakSelf.webView evaluateJavaScript:script completionHandler:weakSelf.evaluateJavaScript];
+            [weakSelf.webView evaluateJavaScript:script
+                               completionHandler:weakSelf.evaluateJavaScript];
         } else {
             completionHandler();
         }
