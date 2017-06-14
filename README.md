@@ -27,7 +27,7 @@ open Example.xcworkspace
 ### Podfile
 ```
 abstract_target 'defaults' do
-    pod 'CBBDataBus', '~2.1.1'
+    pod 'CBBDataBus', '~2.1.2'
 end
 ```
 
