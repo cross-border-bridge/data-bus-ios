@@ -13,7 +13,7 @@ static NSString const* CBBLocationHashPrefix = @"cbb-data-bus://";
 @property (nonatomic) BOOL dataBusFound;
 @property (nonatomic) BOOL consumingRequests;
 @property (nonatomic) void (^evaluateJavaScript)(id, NSError*);
-@property (nonatomic) NSLock* evaluteJavaScriptLocker;
+@property (nonatomic) NSLock* evaluateJavaScriptLocker;
 @end
 
 @implementation CBBWKWebViewDataBus
@@ -29,7 +29,7 @@ static NSString const* CBBLocationHashPrefix = @"cbb-data-bus://";
         _webView = webView;
         _mode = mode;
         _pendingRequests = [NSMutableArray array];
-        _evaluteJavaScriptLocker = [[NSLock alloc] init];
+        _evaluateJavaScriptLocker = [[NSLock alloc] init];
         [self injectCBBDataBus];
     }
     return self;
@@ -142,7 +142,7 @@ static NSString const* CBBLocationHashPrefix = @"cbb-data-bus://";
         return;
     }
 
-    [_evaluteJavaScriptLocker lock];
+    [_evaluateJavaScriptLocker lock];
     __weak __typeof(self) weakSelf = self;
     _evaluateJavaScript = ^(id ret, NSError* error) {
         NSString* data;
@@ -161,7 +161,7 @@ static NSString const* CBBLocationHashPrefix = @"cbb-data-bus://";
         }
     };
     _evaluateJavaScript(nil, nil);
-    [_evaluteJavaScriptLocker unlock];
+    [_evaluateJavaScriptLocker unlock];
 }
 
 - (void)_processReceiveArguments:(NSArray*)data
