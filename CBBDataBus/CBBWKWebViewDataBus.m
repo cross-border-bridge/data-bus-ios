@@ -13,6 +13,7 @@ static NSString const* CBBLocationHashPrefix = @"cbb-data-bus://";
 @property (nonatomic) BOOL dataBusFound;
 @property (nonatomic) BOOL consumingRequests;
 @property (nonatomic) void (^evaluateJavaScript)(id, NSError*);
+@property (nonatomic) NSLock* evaluteJavaScriptLocker;
 @end
 
 @implementation CBBWKWebViewDataBus
@@ -28,6 +29,7 @@ static NSString const* CBBLocationHashPrefix = @"cbb-data-bus://";
         _webView = webView;
         _mode = mode;
         _pendingRequests = [NSMutableArray array];
+        _evaluteJavaScriptLocker = [[NSLock alloc] init];
         [self injectCBBDataBus];
     }
     return self;
@@ -140,22 +142,25 @@ static NSString const* CBBLocationHashPrefix = @"cbb-data-bus://";
         return;
     }
 
-    @synchronized (self) {
-        __weak __typeof(self) weakSelf = self;
-        _evaluateJavaScript = ^(id ret, NSError* error) {
-            NSString* data  = weakSelf.pendingRequests.firstObject;
+    [_evaluteJavaScriptLocker lock];
+    __weak __typeof(self) weakSelf = self;
+    _evaluateJavaScript = ^(id ret, NSError* error) {
+        NSString* data;
+        @synchronized (weakSelf) {
+            data = weakSelf.pendingRequests.firstObject;
             if (data) {
                 [weakSelf.pendingRequests removeObjectAtIndex:0];
             }
-            if (data) {
-                NSString* script = [NSString stringWithFormat:@"CBB.WebViewDataBus.onData(%@);", data];
-                [weakSelf.webView evaluateJavaScript:script completionHandler:weakSelf.evaluateJavaScript];
-            } else {
-                completionHandler();
-            }
-        };
-        _evaluateJavaScript(nil, nil);
-    }
+        }
+        if (data) {
+            NSString* script = [NSString stringWithFormat:@"CBB.WebViewDataBus.onData(%@);", data];
+            [weakSelf.webView evaluateJavaScript:script completionHandler:weakSelf.evaluateJavaScript];
+        } else {
+            completionHandler();
+        }
+    };
+    _evaluateJavaScript(nil, nil);
+    [_evaluteJavaScriptLocker unlock];
 }
 
 - (void)_processReceiveArguments:(NSArray*)data
