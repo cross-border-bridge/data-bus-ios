@@ -12,6 +12,7 @@ static NSString const* CBBLocationHashPrefix = @"cbb-data-bus://";
 @property (nonatomic) NSMutableArray<NSString*>* pendingRequests;
 @property (nonatomic) BOOL dataBusFound;
 @property (nonatomic) BOOL consumingRequests;
+@property (nonatomic) void (^evaluateJavaScript)(id, NSError*);
 @end
 
 @implementation CBBWKWebViewDataBus
@@ -139,28 +140,24 @@ static NSString const* CBBLocationHashPrefix = @"cbb-data-bus://";
         return;
     }
 
-#pragma clang diagnostic push
-#pragma clang diagnostic ignored "-Warc-retain-cycles"
-    __block void (^evaluateJavaScript)(id, NSError*) = ^(id ret, NSError* error) {
+    __weak __typeof(self) weakSelf = self;
+    _evaluateJavaScript = ^(id ret, NSError* error) {
         NSString* data;
-        @synchronized(self)
-        {
-            data = self.pendingRequests.firstObject;
+        @synchronized (weakSelf) {
+            data = weakSelf.pendingRequests.firstObject;
             if (data) {
-                [self.pendingRequests removeObjectAtIndex:0];
+                [weakSelf.pendingRequests removeObjectAtIndex:0];
             }
         }
         if (data) {
             NSString* script = [NSString stringWithFormat:@"CBB.WebViewDataBus.onData(%@);", data];
-            [self.webView evaluateJavaScript:script
-                           completionHandler:evaluateJavaScript];
+            [weakSelf.webView evaluateJavaScript:script
+                               completionHandler:weakSelf.evaluateJavaScript];
         } else {
             completionHandler();
         }
     };
-#pragma clang diagnostic pop
-
-    evaluateJavaScript(nil, nil);
+    _evaluateJavaScript(nil, nil);
 }
 
 - (void)_processReceiveArguments:(NSArray*)data

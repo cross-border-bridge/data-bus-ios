@@ -1,6 +1,6 @@
 Pod::Spec.new do |s|
   s.name = "CBBDataBus"
-  s.version = "2.1.1"
+  s.version = "2.1.2"
   s.summary = "DataBus for iOS"
   s.homepage = "https://github.com/cross-border-bridge/data-bus-ios"
   s.author = 'DWANGO Co., Ltd.'
