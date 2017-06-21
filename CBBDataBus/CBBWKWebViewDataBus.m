@@ -89,6 +89,7 @@ static NSString const* CBBLocationHashPrefix = @"cbb-data-bus://";
     } else {
         [_webView cbb_setNavigationDelegateForwardTo:nil];
     }
+    [_webView removeObserver:self forKeyPath:@"loading"];
     _webView = nil;
     [super destroy];
 }

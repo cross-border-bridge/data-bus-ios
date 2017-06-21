@@ -9,7 +9,7 @@
 |`CBBMemoryQueueDataBus`|`CBBMemoryQueue` を用いたDataBus|
 |`CBBMultiplexDataBus`|DataBusを多重化|
 
-## Example 
+## Example
 本リポジトリの [Example](Example) ディレクトリが, WKWebView(HTML/JavaScript) と ネイティブコード間の DataBus `(CBBWKWebViewDataBus)` で通信をする簡単なサンプル・プロジェクトになっています。
 - ネイティブコード: [ViewController.m](Example/Example/ViewController.m)
 - HTML: [index.html](Example/www/index.html), [script.js](Example/www/script.js)
@@ -23,11 +23,11 @@ pod install
 open Example.xcworkspace
 ```
 
-## Setup 
+## Setup
 ### Podfile
 ```
 abstract_target 'defaults' do
-    pod 'CBBDataBus', '~2.1.2'
+    pod 'CBBDataBus', '~2.1.3'
 end
 ```
 
