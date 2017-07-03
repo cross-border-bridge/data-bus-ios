@@ -1,5 +1,8 @@
 # Change log
 
+## Version 2.1.4
+- CBBMultiplexDataBusが正しく解放されない問題の修正
+
 ## Version 2.1.3
 - WebViewの解放時にクラッシュしてしまう問題の修正
 
