@@ -21,7 +21,7 @@
             if ([weakSelf destroyed] || weakSelf.handlerCount < 1) {
                 return;
             }
-            if (packet.count < 1 || ![_dataId isEqualToString:packet[0]]) {
+            if (packet.count < 1 || ![weakSelf.dataId isEqualToString:packet[0]]) {
                 return;
             }
             NSMutableArray* data = [NSMutableArray arrayWithCapacity:packet.count - 1];
@@ -49,6 +49,7 @@
 - (void)destroy
 {
     [_dataBus removeHandler:_handler];
+    _handler = nil;
     [super destroy];
 }
 
