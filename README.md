@@ -11,7 +11,8 @@
 
 ## Example
 本リポジトリの [Example](Example) ディレクトリが, WKWebView(HTML/JavaScript) と ネイティブコード間の DataBus `(CBBWKWebViewDataBus)` で通信をする簡単なサンプル・プロジェクトになっています。
-- ネイティブコード: [ViewController.m](Example/Example/ViewController.m)
+- ネイティブコード(Objective-c): [ViewController.m](Example/Example/ViewController.m)
+- ネイティブコード(Swift): [ViewController.swift](Example-swift/Example-swift/ViewController.swift)
 - HTML: [index.html](Example/www/index.html), [script.js](Example/www/script.js)
 
 ![screen-shot](Example/screen-shot.png)
@@ -21,6 +22,14 @@ Exampleをビルドして動作させる場合, 事前に `pod install` を実�
 cd Example
 pod install
 open Example.xcworkspace
+```
+
+または
+
+```
+cd Example-swift
+pod install
+open Example-swift.xcworkspace
 ```
 
 ## Setup
