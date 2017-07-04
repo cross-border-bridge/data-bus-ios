@@ -144,7 +144,8 @@ static NSString const* CBBLocationHashPrefix = @"cbb-data-bus://";
     __weak __typeof(self) weakSelf = self;
     _evaluateJavaScript = ^(id ret, NSError* error) {
         NSString* data;
-        @synchronized (weakSelf) {
+        @synchronized(weakSelf)
+        {
             data = weakSelf.pendingRequests.firstObject;
             if (data) {
                 [weakSelf.pendingRequests removeObjectAtIndex:0];
