@@ -2,7 +2,6 @@
 
 ## Version 2.1.3
 - WebViewの解放時にクラッシュしてしまう問題の修正
-- swift用modulemapを追加
 
 ## Version 2.1.2
 - `#pragma clang diagnostic ignored "-Warc-retain-cycles"` で出力抑止していた警告を, 抑止しなくても警告が出ない形に修正
