@@ -13,6 +13,8 @@
 		940931871F0B35EA0068F3AF /* Example_swift.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 940931851F0B35EA0068F3AF /* Example_swift.xcdatamodeld */; };
 		940931891F0B35EA0068F3AF /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 940931881F0B35EA0068F3AF /* Assets.xcassets */; };
 		9409318C1F0B35EA0068F3AF /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 9409318A1F0B35EA0068F3AF /* LaunchScreen.storyboard */; };
+		940931981F0B66140068F3AF /* index.html in Resources */ = {isa = PBXBuildFile; fileRef = 940931961F0B66140068F3AF /* index.html */; };
+		940931991F0B66140068F3AF /* script.js in Resources */ = {isa = PBXBuildFile; fileRef = 940931971F0B66140068F3AF /* script.js */; };
 		9AA8EF7D0EFACBDC36222988 /* libPods-Example-swift.a in Frameworks */ = {isa = PBXBuildFile; fileRef = E443B4913D914777042418B3 /* libPods-Example-swift.a */; };
 /* End PBXBuildFile section */
 
@@ -26,6 +28,9 @@
 		940931881F0B35EA0068F3AF /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		9409318B1F0B35EA0068F3AF /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		9409318D1F0B35EA0068F3AF /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		940931941F0B4F530068F3AF /* Example-swift-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "Example-swift-Bridging-Header.h"; sourceTree = "<group>"; };
+		940931961F0B66140068F3AF /* index.html */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.html; path = index.html; sourceTree = "<group>"; };
+		940931971F0B66140068F3AF /* script.js */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.javascript; path = script.js; sourceTree = "<group>"; };
 		9E353BFAD4347450A99456AF /* Pods-Example-swift.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Example-swift.release.xcconfig"; path = "Pods/Target Support Files/Pods-Example-swift/Pods-Example-swift.release.xcconfig"; sourceTree = "<group>"; };
 		E443B4913D914777042418B3 /* libPods-Example-swift.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-Example-swift.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
@@ -71,6 +76,8 @@
 		9409317D1F0B35EA0068F3AF /* Example-swift */ = {
 			isa = PBXGroup;
 			children = (
+				940931951F0B66140068F3AF /* www */,
+				940931941F0B4F530068F3AF /* Example-swift-Bridging-Header.h */,
 				9409317E1F0B35EA0068F3AF /* AppDelegate.swift */,
 				940931801F0B35EA0068F3AF /* ViewController.swift */,
 				940931821F0B35EA0068F3AF /* Main.storyboard */,
@@ -80,6 +87,16 @@
 				940931851F0B35EA0068F3AF /* Example_swift.xcdatamodeld */,
 			);
 			path = "Example-swift";
+			sourceTree = "<group>";
+		};
+		940931951F0B66140068F3AF /* www */ = {
+			isa = PBXGroup;
+			children = (
+				940931961F0B66140068F3AF /* index.html */,
+				940931971F0B66140068F3AF /* script.js */,
+			);
+			name = www;
+			path = ../../Example/www;
 			sourceTree = "<group>";
 		};
 		FE596861CFDC0CC4DC3CBEE9 /* Pods */ = {
@@ -153,7 +170,9 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				940931991F0B66140068F3AF /* script.js in Resources */,
 				9409318C1F0B35EA0068F3AF /* LaunchScreen.storyboard in Resources */,
+				940931981F0B66140068F3AF /* index.html in Resources */,
 				940931891F0B35EA0068F3AF /* Assets.xcassets in Resources */,
 				940931841F0B35EA0068F3AF /* Main.storyboard in Resources */,
 			);
@@ -344,6 +363,7 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = "jp.co.dwango.cbb.Example-swift";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_OBJC_BRIDGING_HEADER = "Example-swift/Example-swift-Bridging-Header.h";
 				SWIFT_VERSION = 3.0;
 			};
 			name = Debug;
@@ -357,6 +377,7 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = "jp.co.dwango.cbb.Example-swift";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_OBJC_BRIDGING_HEADER = "Example-swift/Example-swift-Bridging-Header.h";
 				SWIFT_VERSION = 3.0;
 			};
 			name = Release;
@@ -380,6 +401,7 @@
 				940931921F0B35EA0068F3AF /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 
