@@ -59,21 +59,35 @@ class ViewController: UIViewController, WKNavigationDelegate, WKUIDelegate {
     }
 
     func addHandler(sender: Any) {
+        let h: CBBDataBusHandler = { (message: [Any]) in
+            // JavaScript側メッセージ受信時の処理
+            let alert = UIAlertController(title: "Alert from Native", message: NSString.localizedStringWithFormat("Received message\n%@", message) as String, preferredStyle: UIAlertControllerStyle.alert)
+            let ok = UIAlertAction(title: "OK", style: UIAlertActionStyle.default, handler: { (action) in
+                alert.dismiss(animated: true, completion: nil)
+            })
+            alert.addAction(ok)
+            self.present(alert, animated: true, completion: nil)
+        }
+        self.dataBus?.addHandler(h)
     }
 
     func sendMessage(sender: Any) {
+        self.dataBus?.sendData(["This", "is", "test", 1234])
     }
 
     func removeHandler(sender: Any) {
+        self.dataBus?.removeAllHandlers()
     }
 
     func destroy(sender: Any) {
+        self.dataBus?.destroy()
     }
 
     func tmpFolder() -> String {
         return NSTemporaryDirectory().appending("www")
     }
 
+    // AppBundleの内容はWKWebViewから参照できないのでテンポラリディレクトリにコピーして用いる
     func copy(target: String) {
         let sourceFile = Bundle.main.path(forResource:target, ofType:nil)
         let destFile = self.tmpFolder().appending("/").appending(target)
@@ -86,6 +100,17 @@ class ViewController: UIViewController, WKNavigationDelegate, WKUIDelegate {
         }
         try! fm.createDirectory(atPath: self.tmpFolder(), withIntermediateDirectories: true, attributes: nil)
         try! fm.copyItem(atPath: sourceFile!, toPath: destFile)
+    }
+
+    // JavaScript側でalertを発行した時の処理
+    func webView(_ webView: WKWebView, runJavaScriptAlertPanelWithMessage message: String, initiatedByFrame frame: WKFrameInfo, completionHandler: @escaping () -> Void) {
+        let alert = UIAlertController(title: "Alert from JS", message: NSString.localizedStringWithFormat("Received message\n%@", message) as String, preferredStyle: UIAlertControllerStyle.alert)
+        let ok = UIAlertAction(title: "OK", style: UIAlertActionStyle.default, handler: { (action) in
+            alert.dismiss(animated: true, completion: nil)
+            completionHandler()
+        })
+        alert.addAction(ok)
+        self.present(alert, animated: true, completion: nil)
     }
 
     override func didReceiveMemoryWarning() {
