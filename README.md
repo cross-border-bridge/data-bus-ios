@@ -10,7 +10,7 @@
 |`CBBMultiplexDataBus`|DataBusを多重化|
 
 ## Example
-本リポジトリの [Example](Example) ディレクトリが, WKWebView(HTML/JavaScript) と ネイティブコード間の DataBus `(CBBWKWebViewDataBus)` で通信をする簡単なサンプル・プロジェクトになっています。
+本リポジトリの [Example](Example), [Example-swift](Example-swift) ディレクトリが, WKWebView(HTML/JavaScript) と ネイティブコード間の DataBus `(CBBWKWebViewDataBus)` で通信をする簡単なサンプル・プロジェクトになっています。
 - ネイティブコード(Objective-c): [ViewController.m](Example/Example/ViewController.m)
 - ネイティブコード(Swift): [ViewController.swift](Example-swift/Example-swift/ViewController.swift)
 - HTML: [index.html](Example/www/index.html), [script.js](Example/www/script.js)
