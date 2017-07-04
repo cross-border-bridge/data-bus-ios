@@ -1,5 +1,9 @@
 # Change log
 
+
+## Version 2.1.6
+- 不正なJSONオブジェクトを送信するとクラッシュしてしまう問題の修正
+
 ## Version 2.1.5
 - swiftをサポート
 

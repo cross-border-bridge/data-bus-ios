@@ -69,6 +69,9 @@ static NSString const* CBBLocationHashPrefix = @"cbb-data-bus://";
     if (!_webView) {
         return;
     }
+    if(![NSJSONSerialization isValidJSONObject:data]) {
+        return;
+    }
     NSError* error = nil;
     NSData* json = [NSJSONSerialization dataWithJSONObject:data options:0 error:&error];
     NSString* jsonString = [[NSString alloc] initWithData:json encoding:NSUTF8StringEncoding];
