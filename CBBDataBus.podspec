@@ -10,4 +10,6 @@ Pod::Spec.new do |s|
   s.source_files = "CBBDataBus/**/*.{h,m}"
   s.resources = "typescript/build/*.js"
   s.frameworks = "WebKit"
+  s.preserve_path = "CBBDataBus.modulemap"
+  s.module_map = "CBBDataBus.modulemap"
 end
