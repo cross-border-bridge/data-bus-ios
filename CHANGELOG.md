@@ -1,5 +1,8 @@
 # Change log
 
+## Version 2.1.5
+- swiftをサポート
+
 ## Version 2.1.4
 - CBBMultiplexDataBusが正しく解放されない問題の修正
 

@@ -10,8 +10,9 @@
 |`CBBMultiplexDataBus`|DataBusを多重化|
 
 ## Example
-本リポジトリの [Example](Example) ディレクトリが, WKWebView(HTML/JavaScript) と ネイティブコード間の DataBus `(CBBWKWebViewDataBus)` で通信をする簡単なサンプル・プロジェクトになっています。
-- ネイティブコード: [ViewController.m](Example/Example/ViewController.m)
+本リポジトリの [Example](Example), [Example-swift](Example-swift) ディレクトリが, WKWebView(HTML/JavaScript) と ネイティブコード間の DataBus `(CBBWKWebViewDataBus)` で通信をする簡単なサンプル・プロジェクトになっています。
+- ネイティブコード(Objective-c): [ViewController.m](Example/Example/ViewController.m)
+- ネイティブコード(Swift): [ViewController.swift](Example-swift/Example-swift/ViewController.swift)
 - HTML: [index.html](Example/www/index.html), [script.js](Example/www/script.js)
 
 ![screen-shot](Example/screen-shot.png)
@@ -23,11 +24,19 @@ pod install
 open Example.xcworkspace
 ```
 
+または
+
+```
+cd Example-swift
+pod install
+open Example-swift.xcworkspace
+```
+
 ## Setup
 ### Podfile
 ```
 abstract_target 'defaults' do
-    pod 'CBBDataBus', '~2.1.3'
+    pod 'CBBDataBus', '~2.1.5'
 end
 ```
 
