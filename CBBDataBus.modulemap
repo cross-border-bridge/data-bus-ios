@@ -1,0 +1,7 @@
+framework module CBBDataBus {
+header "CBBDataBus.h"
+header "CBBMemoryQueue.h"
+header "CBBMemoryQueueDataBus.h"
+header "CBBMultiplexDataBus.h"
+header "CBBWKWebViewDataBus.h"
+}
